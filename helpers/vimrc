@@ -1,0 +1,267 @@
+" Customizable .vimrc with bells and whistles
+
+" ==================================================
+" Starting Up Settings
+" ==================================================
+if has('vim_starting')
+  set nocompatible " Do not try and be VI compatible
+endif
+
+" ==================================================
+" Vundle Setup
+" ==================================================
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" ==================================================
+" Vundle Plugin Management
+" ==================================================
+" Functional Plugins
+Plugin 'vim-scripts/TaskList.vim'
+Plugin 'corntrace/bufexplorer'
+Plugin 'sjl/gundo.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'ervandew/supertab'
+Plugin 'majutsushi/tagbar'
+if v:version >= 704
+    Plugin 'SirVer/ultisnips'
+endif
+Plugin 'tpope/vim-fugitive'
+Plugin 'xolox/vim-misc'
+Plugin 'tpope/vim-repeat'
+Plugin 'xolox/vim-session'
+Plugin 'tpope/vim-surround'
+Plugin 'honza/vim-snippets'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
+if v:version >= 703
+    if has("lua")
+        Plugin 'Shougo/neocomplete.vim'
+    endif
+endif
+" Language Plugins
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'fatih/vim-go'
+Plugin 'tpope/vim-markdown'
+Plugin 'PProvost/vim-ps1'
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'editorconfig/editorconfig-vim'
+" UI Plugins
+Plugin 'tomasr/molokai'
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+" My Plugins
+Plugin 'johnpneumann/johnp-snippets'
+
+call vundle#end()           " required
+
+" Must be called after all vundle stuff
+syntax on
+filetype plugin indent on
+
+" Default to utf8 encoding
+set encoding=utf8
+" Default to unix line-endings, but support dos
+set fileformats=unix,dos
+" Set terminal color to 256
+set t_Co=256
+" Statusline replacements
+set fillchars+=stl:\ ,stlnc:\
+
+" ==================================================
+" View/Color Settings
+" ==================================================
+try
+    colorscheme molokai
+    let g:rehash256 = 1
+catch /^Vim\%((\a\+)\)\=:E185/
+    " deal with it
+endtry
+
+set guifont=Source\ Code\ Pro\ Light:h15
+if has('gui_running')
+    set guioptions+=T                   " Show our toolbar
+    if has("gui_macvim")
+        set lines=75
+        set columns=205
+    elseif has("win32")
+        set guifont=Source\ Code\ Pro\ Light:h12
+        if has("autocmd")
+            au GUIEnter * simalt ~x
+        endif
+    endif
+endif
+
+set synmaxcol=200
+set mousehide
+set cursorline
+set cursorcolumn
+
+" ==================================================
+" Basic Settings
+" ==================================================
+set ch=1				    " Make command line one line high
+set scrolloff=3				" Keep 3 lines when scrolling
+set autoindent				" Always set autoindenting on
+set visualbell t_vb=		" Turn off error beep/flash
+set novisualbell			" Turn off visual bell
+set number				    " Show line numbers
+set title				    " Show title in console title bar
+set nostartofline			" Don't jump to first character when paging
+set backspace=2				" Start,indent,eol
+set showmatch           	" Jump to matching brace immediately after insert
+set matchtime=3				" Time vim will sit on the matching brace
+set nosmartindent 			" Set smartindent on
+set expandtab
+set shortmess=atI			" Abbreviate messages
+set hlsearch				" Highlight search items
+set wildmenu				" Tab complete commands
+set wildmode=list:longest,full 		" List longest first. Don't know if I want this
+set wildignore+=*.pyc       		" Whoever wanted to modify a .pyc?
+set history=10000			" Give me lots of Undos
+set virtualedit=all			" Let my cursor go everywhere
+set incsearch				" Search as I type
+set shellslash 				" Use the / instead of \
+set nowrap				    " No word wrap
+set viminfo='100,/100,:100,@100 	" Settings for vim to remember stuff on startup :help viminfo
+set laststatus=2			" Always show status line
+set hidden 				    " This allows vim to work with buffers much more liberally. So no warnings when switching modified buffers
+set sessionoptions=buffers,resize,winpos,winsize " What information to save when creating a session.
+set sts=4                   " Set the softtabstop to 4 for everything
+set ts=4 				    " Set the tabstop to 4 for everything
+set sw=4 				    " Set the shiftwidth to 4 for everything
+let g:session_autosave = 'no'       " Don't <expletive> ask me to save a <expletive> session every <expletive> time
+let g:session_autoload = 'no'       " Don't <expletive> ask me to open a <expletive> file every <expletive> time
+set nofoldenable            " Set the folds to disabled by default
+set keymodel=
+
+" Persistent undo
+set undodir=~/.vim_undo//
+set undofile
+
+" Put all of the swap files in one directory
+set directory=~/.vim_swap//
+
+" ==================================================
+" Set Plugin Options
+" ==================================================
+" Supertab completion
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+if exists("g:loaded_neocomplete")
+    " Set NeoComplete to run
+    let g:neocomplete#enable_at_startup = 1
+endif
+
+" Set ultisnips vars
+set rtp+=~/.vim/bundle/johnp-snippets
+let g:snips_author = 'vagrant'
+let g:snips_email = $EMAIL
+let g:snips_github = 'https://github.com/vagrant'
+
+
+" Set the docstrings to be normal, doxygen or sphinx based
+let g:ultisnips_python_style = 'sphinx'             " sphinx style docstrings
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+" Nerdtree ignore
+let NERDTreeIgnore = ['\.pyc$']
+
+" Add spaces before we comment
+let NERDSpaceDelims = 1
+" Comment the whole line
+let NERDCommentWholeLinesInVMode=1
+
+" Set the tags we want to look for when populating our todo
+let g:tlTokenList = ['FIXME', 'TODO', 'XXX', 'fixme', 'todo', 'xxx']
+
+"Additional python syntax highlighting
+let python_highlight_all=1
+
+" Gundo Plugin
+nnoremap <F5> :GundoToggle<CR>
+
+" TaskList Plugin
+nnoremap T :TaskList<CR>
+
+" vim-airline options
+let g:Powerline_symbols = 'fancy'
+let g:airline_powerline_fonts = 1
+
+" ansible options
+let g:ansible_options = {'ignore_blank_lines': 0}
+
+
+" ==================================================
+" Key Mappings
+" ==================================================
+" Set our leader character
+let mapleader=","
+
+" Match the lines that are too long.
+nmap <leader>m :exec 'match WarningMsg /\%'.b:textwidth.'v.*/'<CR>
+nmap <leader>n :match<CR>
+
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+
+" This if for custom wrap toggle
+nmap <silent> <leader>w :set invwrap<CR>:set wrap?<CR>
+
+" Clear highlights with spacebar
+nmap <silent> <Space> :nohlsearch <CR>
+
+" Toggle Tagbar
+nmap <leader>o :TagbarToggle<CR>
+
+" Toggle NERDTree
+nmap <leader>nt :NERDTree<CR>
+
+" Open Session
+nmap <leader>os :OpenSession<CR>
+" Save Session
+nmap <leader>ss :SaveSession
+
+" Get the current filtype
+nmap <leader>ft :set filetype?<CR>
+
+" Replace windows line endings
+map <leader>fw :%s/<C-q><C-m>/\r/g<CR>
+
+" Set the file format to unix
+map <leader>un :set ff=unix<CR>
+
+" ==================================================
+" Set Filetype/GUI Options
+" ==================================================
+if has("autocmd")
+    " Remove line/column selection on inactive panes
+    autocmd WinEnter * setlocal cursorline
+    autocmd WinLeave * setlocal nocursorline
+    autocmd WinEnter * setlocal cursorcolumn
+    autocmd WinLeave * setlocal nocursorcolumn
+
+    " Automatically delete trailing white spaces
+    autocmd BufEnter,BufRead,BufWrite * silent! %s/[\r \t]\+$//
+    " Set current directory to that of the opened files
+    autocmd BufEnter,BufWrite * lcd %:p:h
+    " Set default textwidth
+    autocmd BufEnter * let b:textwidth=80
+    " If a MayaAscii file hightlight as if a mel file
+    autocmd BufRead,BufNewFile *.ma setf mel
+
+    " Ensure that all my auto formating is minimal
+    autocmd Filetype * setlocal formatoptions=t
+    " Set the default file to be python
+    autocmd BufEnter * if &filetype == "" | setlocal ft=python | endif
+
+    " Disable completion info
+    set completeopt=menu,menuone
+endif
