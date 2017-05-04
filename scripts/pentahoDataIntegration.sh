@@ -81,8 +81,8 @@ Type=Application
 Terminal=false
 Categories=GNOME;GTK;ETL
 Name=Pentaho Data Integration
-Icon=$KETTLE_INSTALL_DIR/spoon.ico
-Exec=$KETTLE_INSTALL_DIR/spoon.sh
+Icon=/opt/pentaho/data-integration/spoon.ico
+Exec=/opt/pentaho/data-integration/spoon.sh
 EOF'
 
 # Add Pentaho Data Integration icon to side bar menu
