@@ -29,7 +29,7 @@ sudo service lightdm restart
 # Create our "FirstTime" script to run
 tee ~/vagrantFirstTime.sh <<EOF
 gsettings set com.canonical.Unity.Launcher favorites \
-   "$(gsettings get com.canonical.Unity.Launcher favorites | \
+   "\$(gsettings get com.canonical.Unity.Launcher favorites | \
    sed "s/'application:\/\/gnome-terminal.desktop' *, *//g" | sed -e "s/]$/, 'application:\/\/gnome-terminal.desktop']/")"
    
 EOF
@@ -43,7 +43,7 @@ start on desktop-start
 script
 if [ -e ~/vagrantFirstTime.sh ]; then
   sh ~/vagrantFirstTime.sh && \
-  mv -f ~/vagrantFirstTime.sh ~/vagrantFirstTime.sh.alreadyRan
+  mv -f ~/vagrantFirstTime.sh ~/vagrantFirstTime.sh.\$(date +"%Y%m%d%H%M")
 fi
 end script
 EOF

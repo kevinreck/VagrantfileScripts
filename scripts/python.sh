@@ -21,3 +21,6 @@ sudo apt-get install -qq \
 
 # Install the python libraries
 sudo pip install virtualenv
+
+# Upgrade pip
+sudo pip install --upgrade pip
