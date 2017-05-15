@@ -6,6 +6,13 @@ echo ">>> Installing Docker"
 echo ">>>"
 echo " "
 
+# Installing Docker script dependencies
+sudo apt-get install -qq \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
 # Add Docker's official GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
