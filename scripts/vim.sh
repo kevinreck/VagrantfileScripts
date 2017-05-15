@@ -8,9 +8,9 @@ echo " "
 
 # Make sure we have a valid github project URL to pull scripts
 if [[ -z $1 ]]; then
-    github_url="https://raw.githubusercontent.com/fideloper/Vaprobash/master"
+    github_url="https://raw.githubusercontent.com/kevinreck/VagrantfileScripts/master"
 else
-    github_url="https://raw.githubusercontent.com/kevinreck/VagrantfileScripts/dockerScript"
+    github_url="$1"
 fi
 
 # set the vagrant home directory

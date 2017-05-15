@@ -2,7 +2,7 @@
 
 # Make sure we have a valid github project URL to pull scripts
 if [[ -z $1 ]]; then
-    github_url="https://raw.githubusercontent.com/fideloper/Vaprobash/master"
+    github_url="https://raw.githubusercontent.com/kevinreck/VagrantfileScripts/master"
 else
     github_url="$1"
 fi
@@ -23,10 +23,10 @@ echo ">>>     - downloading pentaho will take awhile"
 echo ">>>"
 echo " "
 
-# Make sure we have Java and libwebkit
+# Make sure we have Java, libwebkit and install script dependencies
 sudo apt-get install -qq \
     openjdk-8-jre\
-    libwebkitgtk-1.0.0
+    libwebkitgtk-1.0.0 
 
 # set the vagrant home directory
 user_home_dir="/home/vagrant"
@@ -85,5 +85,11 @@ Icon=/opt/pentaho/data-integration/spoon.ico
 Exec=/opt/pentaho/data-integration/spoon.sh
 EOF'
 
-# Add Pentaho Data Integration icon to side bar menu
-#sudo su - vagrant -c "xdg-desktop-menu install --novendor /usr/share/applications/pentaho.data.integration.desktop"
+tee ~/vagrantFirstTime.sh <<EOF
+gsettings set com.canonical.Unity.Launcher favorites \
+   "$(gsettings get com.canonical.Unity.Launcher favorites | \
+   sed "s/'application:\/\/pentaho.data.integration.desktop' *, *//g" | sed -e "s/]$/, 'application:\/\/pentaho.data.integration.desktop']/")"
+   
+EOF
+
+
