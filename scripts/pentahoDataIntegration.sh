@@ -28,9 +28,6 @@ sudo apt-get install -qq \
     openjdk-8-jre\
     libwebkitgtk-1.0.0
 
-# set the vagrant home directory
-user_home_dir="/home/vagrant"
-
 # Create directory
 mkdir -p $KETTLE_INSTALL_DIR
 
@@ -85,9 +82,10 @@ Icon=/opt/pentaho/data-integration/spoon.ico
 Exec=/opt/pentaho/data-integration/spoon.sh
 EOF'
 
-tee -a /tmp/vagrantFirstTime.sh <<EOF
+# Because this script is not Run as vagrant
+tee /tmp/vagrantFirstTime.sh <<EOF
 gsettings set com.canonical.Unity.Launcher favorites \
-   "$(gsettings get com.canonical.Unity.Launcher favorites | \
+   "\$(gsettings get com.canonical.Unity.Launcher favorites | \
    sed "s/'application:\/\/pentaho.data.integration.desktop' *, *//g" | sed -e "s/]$/, 'application:\/\/pentaho.data.integration.desktop']/")"
 
 EOF
