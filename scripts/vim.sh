@@ -34,7 +34,7 @@ curl --silent -L \
 sudo chown -R vagrant:vagrant $user_home_dir
 
 # update the font cache
-sudo su - vagrant -c 'fc-cache -vf $user_home_dir/.local/share/fonts/'
+sudo -H -u vagrant bash -c 'fc-cache -vf $user_home_dir/.local/share/fonts/'
 
 # Install Vundle Bundles
-sudo su - vagrant -c 'vim +PluginInstall  +qall'
+sudo -H -u vagrant bash -c 'vim +PluginInstall  +qall'

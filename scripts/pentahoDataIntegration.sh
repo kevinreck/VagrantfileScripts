@@ -9,7 +9,7 @@ fi
 
 PENTAHO_HOME_DEFAULT=/opt/pentaho
 
-PENTAHO_DI_RELEASE_VERSION=7.0 
+PENTAHO_DI_RELEASE_VERSION=7.0
 PENTAHO_DI_SUB_VERSION=7.0.0.0-25
 PENTAHO_HOME=$PENTAHO_HOME_DEFAULT
 KETTLE_INSTALL_DIR=$PENTAHO_HOME_DEFAULT/data-integration
@@ -26,7 +26,7 @@ echo " "
 # Make sure we have Java, libwebkit and install script dependencies
 sudo apt-get install -qq \
     openjdk-8-jre\
-    libwebkitgtk-1.0.0 
+    libwebkitgtk-1.0.0
 
 # set the vagrant home directory
 user_home_dir="/home/vagrant"
@@ -69,12 +69,12 @@ curl -s -S -L \
 
 
 # Add Pentaho to our users path so we can run (spoon.sh/kitchen.sh/pan.sh)
-sudo bash -c 'cat << EOF > /etc/profile.d/pentaho-data-integration.sh
+bash -c 'cat << EOF > /etc/profile.d/pentaho-data-integration.sh
 PATH=\$PATH:/opt/pentaho/data-integration
 EOF'
 
 # Create our Icon
-sudo bash -c 'cat << EOF > /usr/share/applications/pentaho.data.integration.desktop
+bash -c 'cat << EOF > /usr/share/applications/pentaho.data.integration.desktop
 [Desktop Entry]
 Version=7.0.0.0-25
 Type=Application
@@ -85,11 +85,13 @@ Icon=/opt/pentaho/data-integration/spoon.ico
 Exec=/opt/pentaho/data-integration/spoon.sh
 EOF'
 
-tee ~/vagrantFirstTime.sh <<EOF
+tee -a /tmp/vagrantFirstTime.sh <<EOF
 gsettings set com.canonical.Unity.Launcher favorites \
    "$(gsettings get com.canonical.Unity.Launcher favorites | \
    sed "s/'application:\/\/pentaho.data.integration.desktop' *, *//g" | sed -e "s/]$/, 'application:\/\/pentaho.data.integration.desktop']/")"
-   
+
 EOF
+
+sudo -H -u vagrant bash -c 'cat /tmp/vagrantFirstTime.sh >> ~/vagrantFirstTime.sh'
 
 
