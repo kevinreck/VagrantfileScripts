@@ -14,7 +14,7 @@ sudo apt-get install -qq \
    unity-lens-applications
 
 # Enable the Auto Login
-sudo mkdir /etc/lightdm/lightdm.conf.d
+sudo mkdir -p /etc/lightdm/lightdm.conf.d
 
 sudo bash -c 'cat << EOF > /etc/lightdm/lightdm.conf.d/50-myconfig.conf
 [SeatDefaults]
