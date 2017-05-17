@@ -10,7 +10,10 @@ fi
 sudo apt-get install -qq --no-install-recommends ubuntu-desktop
 sudo apt-get install -qq \
    gnome-panel \
-   gnome-terminal firefox \
+   gnome-terminal \
+   vim-gnome \
+   chromium-browser \
+   firefox \
    unity-lens-applications
 
 # Enable the Auto Login
